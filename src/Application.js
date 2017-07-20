@@ -23,7 +23,10 @@ contactDetails = {
 },
 experience = {
   0: {
-    institution: ""
+    iwtytbr
+  },
+  1: {
+    marin
   }
 },
 education = {
@@ -36,16 +39,36 @@ education = {
     year: "1994",
   }
 },
+iwtytbr = {
+  company: 'I Will Teach You To Be Rich, Inc.',
+},
+marin = {
+  company: 'Marin Software',
+},
 resume = {contact,
 experience,
 education
 };
 
-const items = Object.keys(resume);
+const items = Object.keys(resume),
+checkedByDefaultArr = ['experience'];
+
 
 class Application extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      checkedByDefault: checkedByDefaultArr,
+      checkedAreas: [],
+      checkedAreasObj: {},
+    };
+  }
+
   componentWillMount = () => {
     this.selectedCheckboxes = new Set();
+    for (const checkbox of this.state.checkedByDefault) {
+      this.selectedCheckboxes.add(checkbox);
+    }
   }
 
   toggleCheckbox = label => {
@@ -56,11 +79,18 @@ class Application extends Component {
     }
   }
 
+
+
   handleFormSubmit = formSubmitEvent => {
     formSubmitEvent.preventDefault();
 
     for (const checkbox of this.selectedCheckboxes) {
       console.log(checkbox, 'is selected.');
+      // add to displayedAreas state
+      //this.setState.displayedAreasObj[checkbox] = resume[checkbox];
+      if (this.state.checkedAreas.indexOf(checkbox) > -1) {
+        //this.setState.checkedAreas[] = checkbox;
+      }
     }
   }
 
@@ -69,6 +99,7 @@ class Application extends Component {
       label={label}
       handleCheckboxChange={this.toggleCheckbox}
       key={label}
+      initChecked={this.state.checkedByDefault.indexOf(label) >= 0 ? true : false}
     />
   )
 
@@ -85,10 +116,15 @@ class Application extends Component {
             <form onSubmit={this.handleFormSubmit}>
               {this.createCheckboxes()}
 
-              <button className="btn btn-default" type="submit">Save</button>
+              <button className="btn btn-default" type="submit">Refresh</button>
             </form>
 
           </div>
+        </div>
+        <div className="row">
+        <div className="col-sm-12">
+
+        </div>
         </div>
       </div>
     );
