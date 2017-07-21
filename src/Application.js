@@ -6,8 +6,8 @@ firstName:"Bret",
 lastName:"Wadleigh",
 age:48,
 eyeColor:"blue",
-address: addressDetails,
-contact: contactDetails,
+addressDetails,
+contactDetails,
 },
 addressDetails = {
 street: "217 14th Ave",
@@ -20,6 +20,12 @@ contactDetails = {
   phone: "415 378 5426",
   skype: "bret.wadleigh",
   twitter: "bret4dev",
+},
+iwtytbr = {
+  companyName: 'I Will Teach You To Be Rich, Inc.',
+},
+marin = {
+  companyName: 'Marin Software',
 },
 experience = {
   0: {
@@ -39,16 +45,12 @@ education = {
     year: "1994",
   }
 },
-iwtytbr = {
-  company: 'I Will Teach You To Be Rich, Inc.',
-},
-marin = {
-  company: 'Marin Software',
-},
 resume = {contact,
 experience,
 education
 };
+
+console.log(resume);
 
 const items = Object.keys(resume),
 checkedByDefaultArr = ['experience'];
@@ -58,8 +60,9 @@ class Application extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      allItems: items,
       checkedByDefault: checkedByDefaultArr,
-      checkedAreas: [],
+      //checkedAreas: [],
       checkedAreasObj: {},
     };
   }
@@ -68,6 +71,11 @@ class Application extends Component {
     this.selectedCheckboxes = new Set();
     for (const checkbox of this.state.checkedByDefault) {
       this.selectedCheckboxes.add(checkbox);
+      this.setState((prevState) => ({
+        //checkedAreas: prevState.checkedAreas.push(checkbox),
+        checkedAreasObj: prevState.checkedAreasObj[checkbox] = resume[checkbox]
+      }));
+      console.log(this.state.checkedAreasObj);
     }
   }
 
@@ -79,18 +87,23 @@ class Application extends Component {
     }
   }
 
-
-
   handleFormSubmit = formSubmitEvent => {
     formSubmitEvent.preventDefault();
-
+    console.log(this.selectedCheckboxes);
     for (const checkbox of this.selectedCheckboxes) {
       console.log(checkbox, 'is selected.');
+      if (!this.state.checkedAreasObj.hasOwnProperty(checkbox)){
+        this.setState((prevState) => ({
+          checkedAreasObj: prevState.checkedAreasObj[checkbox] = resume[checkbox]
+        }));
+      }
+      console.log(this.state.checkedAreasObj);
+      //console.log('checkedAreas', this.state.checkedAreas);
       // add to displayedAreas state
       //this.setState.displayedAreasObj[checkbox] = resume[checkbox];
-      if (this.state.checkedAreas.indexOf(checkbox) > -1) {
+      //if (this.state.checkedAreas.indexOf(checkbox) > -1) {
         //this.setState.checkedAreas[] = checkbox;
-      }
+      //}
     }
   }
 
