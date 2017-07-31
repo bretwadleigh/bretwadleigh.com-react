@@ -3,8 +3,8 @@ import React, { Component} from 'react';
 class Area extends Component {
 
   createNode = node => (
-    <div className="node {node}">
-    <span>{this.props.areasubsection[node]}</span>
+    <div className={node}>
+    <span dangerouslySetInnerHTML={{__html: this.props.areasubsection[node]}} />
     </div>
   )
 
@@ -15,14 +15,15 @@ class Area extends Component {
   render() {
     const {area} = this.props;
     const thisObject = this.props.areasubsection;
+    const thisClassNameArea = "area";
 
     console.log(thisObject);
 
     return (
     <div className="row">
       <div className="col-sm-12">
-        <div className="{area}" id="area_{section}">
-          <span className="sub-level_{area}">
+        <div className={area} id={thisClassNameArea + '_' + area}>
+          <span className={area}>
           <label>{area}:</label> {(typeof thisObject === 'object') ? this.createNodes(thisObject) : thisObject}
           </span>
         </div>

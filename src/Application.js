@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Checkbox from './Checkbox';
 import Section from './Section';
 
+require('../scss/styles.scss');
+
 var addressDetails = {
 street: "217 14th Ave",
 city: "San Francisco",
@@ -12,7 +14,7 @@ contactDetails = {
   email: "bretwadleigh@yahoo.com",
   phone: "(415) 378-5426",
   skype: '<a href=\"skype:bret.wadleigh\">Skype: bret.wadleigh</a>',
-  twitter: '<a href=\"https://twitter.com/bret4dev\">@bret4dev</a>',
+  twitter: '<a href=\"https://twitter.com/bret4dev\">Twitter: @bret4dev</a>',
 },
 contact = {
 firstName:"Bret",
@@ -22,6 +24,12 @@ eyeColor:"blue",
 addressDetails,
 contactDetails
 },
+marin = {
+  companyName: 'Marin Software',
+  jobTitle: 'Learning Engineer',
+  duration: 'March thru November 2015, July 2017 to Present',
+  stack: 'Mindtouch, JavaScript, REST, DigitalChalk API, Salesforce',
+},
 iwtytbr = {
   companyName: 'I Will Teach You To Be Rich, Inc.',
   jobTitle: 'Senior Fullstack Engineer',
@@ -29,15 +37,16 @@ iwtytbr = {
   stack: 'Infusionsoft API, CakePHP, Javascript',
   //endDate: '',
 },
-marin = {
-  companyName: 'Marin Software',
-  jobTitle: 'Learning Engineer',
-  duration: 'March 2015 to November 2015',
-  stack: 'Mindtouch, JavaScript, REST, DigitalChalk API, Salesforce',
+techbargains = {
+  companyName: 'TechBargains.com',
+  jobTitle: 'Senior UI Developer',
+  duration: 'August 2013 to January 2015',
+  stack: 'HTML5, jQuery, CSS3, SEAM template development on J2EE/Amazon Web Services',
 },
 experience = {
+  marin,
   iwtytbr,
-  marin
+  techbargains
 },
 calpoly = {
   institution: "California Polytechnic",
@@ -50,10 +59,21 @@ calpoly = {
 education = {
   calpoly
 },
+github = {
+  //main: 'https://github.com/bretwadleigh',
+  'This Page': 'https://github.com/bretwadleigh/bretwadleigh.com-react',
+  Uses: 'React, SASS, Webpack',
+
+
+},
 resume = {contact,
 experience,
-education
-};
+education,
+github
+},
+header = {
+  h1: 'Bret Wadleigh - Front-End Web Developer & PHP Fullstack Engineer'
+}
 
 console.log(resume);
 
@@ -145,51 +165,37 @@ class Application extends Component {
     Object.keys(this.state.checkedAreas).map(this.createSection)
   )
 
-/*
-  createDomNodes = () => {
-    let top_a = this.state.checkedAreas, the_node = [], dom_node;
-    for (var key in top_a) {
-      if (top_a.hasOwnProperty(key)) {
-        if (typeof top_a[key] === 'object') {
-          //dom_node = createDomNode[top_a[key]];
-          //the_node.concat(dom_node);
+  createHeader = () => (
+    <header>
+    <h1>{header['h1']}</h1>
+    </header>
+  )
 
-        }
-      }
+  showCheckedCheckboxes = () => {
+    let theseChecked = '';
+    for (const checkbox of this.selectedCheckboxes) {
+      theseChecked = theseChecked + ' ' + checkbox;
     }
-
-    return (<div className="areas">{the_node}</div>);
+    return theseChecked
   }
-
-  createDomNode = (obj) => {
-    var dom_nodes = [], new_nodes;
-    for (var key in obj) {
-      if (obj.hasOwnProperty(key)) {
-        if (typeof obj[key] === 'object') {
-          new_nodes = createDomNode(obj[key]);
-          dom_node.concat(new_nodes);
-        } else {
-          dom_node.push(<div className={key}>obj[key]</div>);
-        }
-        the_node[key] = resume[key];
-      }
-    }
-    return (dom_nodes)
-  }
-
-  */
 
   render() {
     return (
     <div className="main-app">
       <div className="container">
+      <div className="row">
+      <div className="col-sm-12 header">
+      {this.createHeader()}
+      </div>
+      </div>
         <div className="row">
           <div className="col-sm-12">
 
             <form onSubmit={this.handleFormSubmit}>
               {this.createCheckboxes()}
-
-              <button className="btn btn-default" type="submit">Refresh</button>
+              <div className="btn-wrapper">
+              <button className="btn btn-default" type="submit">Show Bret&#39;s: {this.showCheckedCheckboxes()} </button>
+              </div>
             </form>
 
           </div>
